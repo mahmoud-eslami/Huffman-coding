@@ -26,51 +26,71 @@ class _SplashPageState extends State<SplashPage> {
       mainAxisAlignment:
           isCenter ? MainAxisAlignment.center : MainAxisAlignment.start,
       children: [
-        Text(
-          text,
-          style: style,
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
+        Expanded(
+          child: Text(
+            text,
+            style: style,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            textAlign: isCenter ? TextAlign.center : TextAlign.start,
+          ),
         ),
       ],
     );
   }
 
+  sizedBox() => SizedBox(
+        height: 70,
+      );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Center(
-                child: textWidget(
-              "Huffman Coding",
-              style: titleStyle,
-            )),
-            textWidget(
-              "Teacher name : Mahmoud yaghoubi",
-              style: bodyStyle,
-            ),
-            textWidget(
-              "Developer : Mahmoud Eslami",
-              style: bodyStyle,
-            ),
-            textWidget(
-              "impelementation of huffman coding",
-              style: hintStyle,
-            ),
-            SizedBox(
-              width: 200,
-              height: 50,
-              child: ElevatedButton(
-                onPressed: () {},
-                child: textWidget("Start"),
-                style: ElevatedButton.styleFrom(),
+      backgroundColor: Colors.cyan,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Center(
+              child: textWidget(
+            "Huffman Coding",
+            style: titleStyle,
+          )),
+          sizedBox(),
+          textWidget(
+            "Teacher : Mahmoud yaghoubi",
+            style: bodyStyle,
+          ),
+          textWidget(
+            "Developer : Mahmoud Eslami",
+            style: bodyStyle,
+          ),
+          sizedBox(),
+          textWidget(
+            "impelementation of huffman coding algorithm",
+            style: hintStyle,
+          ),
+          sizedBox(),
+          SizedBox(
+            width: 250,
+            height: 55,
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => HuffmanPage(),
+                    ));
+              },
+              child: textWidget(
+                "Start",
+                style: buttonStyle,
               ),
-            )
-          ],
-        ),
+              style: ElevatedButton.styleFrom(
+                primary: Colors.black,
+              ),
+            ),
+          )
+        ],
       ),
     );
   }

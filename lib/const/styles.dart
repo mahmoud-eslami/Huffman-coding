@@ -6,8 +6,9 @@ const TextStyle titleStyle = TextStyle(
 );
 const TextStyle bodyStyle = TextStyle(fontSize: 25);
 const TextStyle underlineStyle = TextStyle(fontSize: 20);
+const TextStyle buttonStyle = TextStyle(fontSize: 20, color: Colors.white);
 const TextStyle hintStyle = TextStyle(
   fontSize: 20,
-  color: Colors.grey,
+  color: Colors.black45,
   fontStyle: FontStyle.italic,
 );
