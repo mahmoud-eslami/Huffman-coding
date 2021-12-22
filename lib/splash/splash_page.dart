@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:huffman_code/const/styles.dart';
+import 'package:huffman_code/global_widget/text_widget.dart';
 import 'package:huffman_code/huffman/huffman_page.dart';
 
 class SplashPage extends StatefulWidget {
@@ -15,28 +16,6 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
-  }
-
-  textWidget(
-    text, {
-    style,
-    isCenter = true,
-  }) {
-    return Row(
-      mainAxisAlignment:
-          isCenter ? MainAxisAlignment.center : MainAxisAlignment.start,
-      children: [
-        Expanded(
-          child: Text(
-            text,
-            style: style,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            textAlign: isCenter ? TextAlign.center : TextAlign.start,
-          ),
-        ),
-      ],
-    );
   }
 
   sizedBox() => SizedBox(
