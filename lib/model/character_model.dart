@@ -1,11 +1,11 @@
 class CharacterModel {
   final String char;
-  final int repetition;
+  final int frequency;
 
-  CharacterModel({required this.char, required this.repetition});
+  CharacterModel({required this.char, required this.frequency});
 
   @override
   String toString() {
-    return "char : $char | repetition : $repetition";
+    return "char : $char | repetition : $frequency";
   }
 }
