@@ -89,7 +89,7 @@ class _HuffmanPageState extends State<HuffmanPage> {
                           var queue =
                               controller.createNodeQueueFromCharacterList(
                                   characterAnalyzeList);
-                          print(queue);
+                          controller.getLowestFrequencyNode(queue);
                           setState(() {});
                         }
                       },

@@ -1,4 +1,6 @@
-class NodeModel extends Comparable<NodeModel> {
+import 'package:equatable/equatable.dart';
+
+class NodeModel extends Equatable with Comparable<NodeModel> {
   final int frequency;
   final String name;
   final NodeModel? lNode;
@@ -22,4 +24,12 @@ class NodeModel extends Comparable<NodeModel> {
       return -1;
     }
   }
+
+  @override
+  List<Object?> get props => [
+        frequency,
+        name,
+        lNode,
+        rNode,
+      ];
 }

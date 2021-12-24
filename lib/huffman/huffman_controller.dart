@@ -35,4 +35,18 @@ class HuffmanController {
 
     return queue;
   }
+
+  createHuffmanCodingTree(PriorityQueue<NodeModel> queue) {
+    if (queue.length <= 1) {
+      return queue;
+    } else {}
+  }
+
+  void getLowestFrequencyNode(PriorityQueue<NodeModel> queue) {
+    List nodeList = queue.toList();
+    for (var element in nodeList) {
+      print(element);
+    }
+  }
+  // NodeModel createNewNode(NodeModel node1, NodeModel node2) {}
 }
