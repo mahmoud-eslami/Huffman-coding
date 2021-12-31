@@ -36,7 +36,7 @@ class _SplashPageState extends State<SplashPage> {
           )),
           sizedBox(),
           textWidget(
-            "Teacher : Mahmoud yaghoubi",
+            "Supervisor : Mahmoud yaghoubi",
             style: bodyStyle,
           ),
           textWidget(

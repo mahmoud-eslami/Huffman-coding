@@ -37,12 +37,9 @@ class HuffmanController {
     return queue;
   }
 
-  createHuffmanCodingTree(PriorityQueue<NodeModel> queue) {
+  Future createHuffmanCodingTree(PriorityQueue<NodeModel> queue) async {
     PriorityQueue<NodeModel> tempQueue = queue;
-    if (tempQueue.length <= 1) {
-      print(tempQueue);
-      // return tempQueue;
-    } else {
+    if (tempQueue.length > 1) {
       /// get items from queue to create new node
       NodeModel item1 = getLowestFrequencyNode(tempQueue);
       tempQueue.remove(item1);
@@ -59,11 +56,9 @@ class HuffmanController {
       /// add new node to queue
       tempQueue.add(newNode);
 
-      print("***************************************");
-      print(tempQueue);
-
       createHuffmanCodingTree(tempQueue);
     }
+    return queue;
   }
 
   NodeModel getLowestFrequencyNode(PriorityQueue<NodeModel> queue) {
@@ -71,5 +66,36 @@ class HuffmanController {
     return nodeList.last;
   }
 
-// NodeModel createNewNode(NodeModel node1, NodeModel node2) {}
+  getDepth(NodeModel rootNode, List dataList) {
+    var tempList = dataList;
+    print("started");
+    if (rootNode.lNode == null && rootNode.rNode == null) {
+      print("finished");
+      return tempList;
+    } else if (rootNode.lNode == null && rootNode.rNode != null) {
+      var list = [null, rootNode.rNode];
+      print(tempList);
+      tempList.add(list);
+      getDepth(rootNode.rNode!, tempList);
+    } else if (rootNode.lNode != null && rootNode.rNode == null) {
+      print(tempList);
+
+      var list = [rootNode.lNode, null];
+      tempList.add(list);
+      getDepth(rootNode.lNode!, tempList);
+    } else {
+      print(tempList);
+
+      var list = [rootNode.lNode, rootNode.rNode];
+      tempList.add(list);
+      getDepth(rootNode.rNode!, tempList);
+      getDepth(rootNode.lNode!, tempList);
+    }
+  }
+
+  List parseFinalNode(NodeModel rootNode) {
+    List<List<NodeModel>> dataList = [];
+
+    return [];
+  }
 }

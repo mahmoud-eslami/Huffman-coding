@@ -5,6 +5,8 @@ import 'package:huffman_code/const/styles.dart';
 import 'package:huffman_code/global_widget/text_widget.dart';
 import 'package:huffman_code/huffman/huffman_controller.dart';
 import 'package:huffman_code/model/character_model.dart';
+import 'package:collection/collection.dart';
+import 'package:huffman_code/model/node_model.dart';
 
 class HuffmanPage extends StatefulWidget {
   const HuffmanPage({Key? key}) : super(key: key);
@@ -17,6 +19,7 @@ class _HuffmanPageState extends State<HuffmanPage> {
   TextEditingController inputController = TextEditingController();
   HuffmanController controller = HuffmanController();
   List<CharacterModel> characterAnalyzeList = [];
+  PriorityQueue<NodeModel> pq = PriorityQueue<NodeModel>();
 
   @override
   void initState() {
@@ -73,7 +76,7 @@ class _HuffmanPageState extends State<HuffmanPage> {
                     child: SizedBox(
                       height: 55,
                       child: ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
                           if (inputController.text.isEmpty) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
@@ -87,10 +90,14 @@ class _HuffmanPageState extends State<HuffmanPage> {
                             List<CharacterModel> analyzedData = controller
                                 .analyzeInputMessage(inputController.text);
                             characterAnalyzeList = analyzedData;
+                            // create node queue
                             var queue =
                                 controller.createNodeQueueFromCharacterList(
                                     characterAnalyzeList);
-                            controller.createHuffmanCodingTree(queue);
+                            // assign values to pq
+                            pq =
+                                await controller.createHuffmanCodingTree(queue);
+                            print(controller.getDepth(pq.first, []));
                             setState(() {});
                           }
                         },
@@ -128,8 +135,22 @@ class _HuffmanPageState extends State<HuffmanPage> {
               ),
               sizedBox(),
               if (characterAnalyzeList.isNotEmpty) inputAnalyzeWidget(),
+              sizedBox(),
+              if (pq.isNotEmpty) huffmanTreeWidget(),
             ],
           ),
+        ),
+      );
+
+  huffmanTreeWidget() => Container(
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: Colors.cyan,
+            width: 2.2,
+          ),
+        ),
+        child: Center(
+          child: Text(pq.toString()),
         ),
       );
 
