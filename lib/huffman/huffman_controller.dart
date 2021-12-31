@@ -11,6 +11,7 @@ class HuffmanController {
       if (!chars.contains(character)) chars.add(character);
     }
     var finalList = characterModelList(message, chars);
+    finalList.sort();
     return finalList;
   }
 
@@ -37,16 +38,38 @@ class HuffmanController {
   }
 
   createHuffmanCodingTree(PriorityQueue<NodeModel> queue) {
-    if (queue.length <= 1) {
-      return queue;
-    } else {}
-  }
+    PriorityQueue<NodeModel> tempQueue = queue;
+    if (tempQueue.length <= 1) {
+      print(tempQueue);
+      // return tempQueue;
+    } else {
+      /// get items from queue to create new node
+      NodeModel item1 = getLowestFrequencyNode(tempQueue);
+      tempQueue.remove(item1);
+      NodeModel item2 = getLowestFrequencyNode(tempQueue);
+      tempQueue.remove(item2);
 
-  void getLowestFrequencyNode(PriorityQueue<NodeModel> queue) {
-    List nodeList = queue.toList();
-    for (var element in nodeList) {
-      print(element);
+      /// create new node
+      NodeModel newNode = NodeModel(
+          frequency: item2.frequency + item1.frequency,
+          name: item1.name + item2.name,
+          lNode: item1,
+          rNode: item2);
+
+      /// add new node to queue
+      tempQueue.add(newNode);
+
+      print("***************************************");
+      print(tempQueue);
+
+      createHuffmanCodingTree(tempQueue);
     }
   }
-  // NodeModel createNewNode(NodeModel node1, NodeModel node2) {}
+
+  NodeModel getLowestFrequencyNode(PriorityQueue<NodeModel> queue) {
+    List nodeList = queue.toList();
+    return nodeList.last;
+  }
+
+// NodeModel createNewNode(NodeModel node1, NodeModel node2) {}
 }

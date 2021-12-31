@@ -1,5 +1,6 @@
+// ignore_for_file: unnecessary_string_interpolations
+
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:huffman_code/const/styles.dart';
 import 'package:huffman_code/global_widget/text_widget.dart';
 import 'package:huffman_code/huffman/huffman_controller.dart';
@@ -49,85 +50,86 @@ class _HuffmanPageState extends State<HuffmanPage> {
 
   body() => Padding(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-        child: Column(
-          children: [
-            TextFormField(
-              controller: inputController,
-              decoration: const InputDecoration(
-                label: Text(
-                  "Enter input here ...",
-                  style: hintStyle,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              TextFormField(
+                controller: inputController,
+                maxLength: null,
+                maxLines: null,
+                decoration: const InputDecoration(
+                  label: Text(
+                    "Enter input here ...",
+                    style: hintStyle,
+                  ),
                 ),
+                style: bodyStyle,
               ),
-              inputFormatters: [
-                FilteringTextInputFormatter.deny(RegExp(r'\s')),
-              ],
-              style: bodyStyle,
-            ),
-            sizedBox(),
-            Row(
-              children: [
-                Expanded(
-                  flex: 2,
-                  child: SizedBox(
-                    height: 55,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        if (inputController.text.isEmpty) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text(
-                                "Please enter an input :D",
-                                style: bodyStyle,
+              sizedBox(),
+              Row(
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: SizedBox(
+                      height: 55,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if (inputController.text.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text(
+                                  "Please enter an input :D",
+                                  style: bodyStyle,
+                                ),
                               ),
-                            ),
-                          );
-                        } else {
-                          List<CharacterModel> analyzedData = controller
-                              .analyzeInputMessage(inputController.text);
-                          characterAnalyzeList = analyzedData;
-                          var queue =
-                              controller.createNodeQueueFromCharacterList(
-                                  characterAnalyzeList);
-                          controller.getLowestFrequencyNode(queue);
-                          setState(() {});
-                        }
-                      },
-                      child: textWidget(
-                        "Analyze",
-                        style: buttonStyle,
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.black,
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                Expanded(
-                  child: SizedBox(
-                    height: 55,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        clearFunction();
-                      },
-                      child: textWidget(
-                        "Clear",
-                        style: buttonStyle,
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.black,
+                            );
+                          } else {
+                            List<CharacterModel> analyzedData = controller
+                                .analyzeInputMessage(inputController.text);
+                            characterAnalyzeList = analyzedData;
+                            var queue =
+                                controller.createNodeQueueFromCharacterList(
+                                    characterAnalyzeList);
+                            controller.createHuffmanCodingTree(queue);
+                            setState(() {});
+                          }
+                        },
+                        child: textWidget(
+                          "Analyze",
+                          style: buttonStyle,
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.black,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            sizedBox(),
-            if (characterAnalyzeList.isNotEmpty) inputAnalyzeWidget(),
-          ],
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Expanded(
+                    child: SizedBox(
+                      height: 55,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          clearFunction();
+                        },
+                        child: textWidget(
+                          "Clear",
+                          style: buttonStyle,
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.black,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              sizedBox(),
+              if (characterAnalyzeList.isNotEmpty) inputAnalyzeWidget(),
+            ],
+          ),
         ),
       );
 
@@ -138,25 +140,29 @@ class _HuffmanPageState extends State<HuffmanPage> {
             width: 2.2,
           ),
         ),
-        child: Column(
-          children: [
-            sizedBox(),
-            textWidget(
-              "Characters repetition count",
-              style: bodyStyle.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            sizedBox(),
-            for (var i = 0; i < characterAnalyzeList.length; i++)
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
               textWidget(
-                characterAnalyzeList[i].char +
-                    " : " +
-                    characterAnalyzeList[i].frequency.toString(),
-                style: bodyStyle,
+                "Characters repetition count",
+                style: bodyStyle.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            sizedBox(),
-          ],
+              sizedBox(),
+              Wrap(
+                children: [
+                  for (var i = 0; i < characterAnalyzeList.length; i++)
+                    Text(
+                      "[${characterAnalyzeList[i].char}:${characterAnalyzeList[i].frequency.toString()}]" +
+                          "   ",
+                    ),
+                ],
+              ),
+              sizedBox(),
+            ],
+          ),
         ),
       );
 
