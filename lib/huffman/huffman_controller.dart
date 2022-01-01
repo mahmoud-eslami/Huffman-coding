@@ -37,6 +37,8 @@ class HuffmanController {
       queue.add(NodeModel(frequency: element.frequency, name: element.char));
     }
 
+    print(queue);
+
     return queue;
   }
 
@@ -71,14 +73,11 @@ class HuffmanController {
 
   parseFinalNode(NodeModel rootNode, String path, List<LeafModel> list,
       List characterList) async {
-    // print("char l :" + characterAnalyzeListG.length.toString());
-    // print("list l :" + list.length.toString());
-
     if (rootNode.isLeaf()) {
       list.add(LeafModel(
           char: rootNode.name, frequency: rootNode.frequency, code: path));
 
-      if (list.length == characterList.length - 1) {
+      if (list.length == characterList.length) {
         finalCharactersCode.addAll(list);
       }
     } else {
@@ -89,5 +88,32 @@ class HuffmanController {
         parseFinalNode(rootNode.lNode!, path + "0", list, characterList);
       }
     }
+  }
+
+  calculateNormalBitSize(List<CharacterModel> characterAnalyzeList) {
+    var sum = 0;
+
+    characterAnalyzeList.forEach((element) {
+      var freq = element.frequency * 8;
+      sum += freq;
+    });
+
+    return sum;
+  }
+
+  calculateHuffmanBitSize(List<LeafModel> finalCharactersCode) {
+    var sum = 0;
+
+    finalCharactersCode.forEach((element) {
+      sum += element.frequency * element.code.length;
+    });
+    finalCharactersCode.forEach((element) {
+      sum += element.frequency;
+    });
+    finalCharactersCode.forEach((element) {
+      sum += 8;
+    });
+
+    return sum;
   }
 }

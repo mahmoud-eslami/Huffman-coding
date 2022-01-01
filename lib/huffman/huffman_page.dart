@@ -191,8 +191,35 @@ class _HuffmanPageState extends State<HuffmanPage> {
             width: 2.2,
           ),
         ),
-        child: Center(
-          child: Text(pq.toString()),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              textWidget(
+                "Difference :",
+                style: bodyStyle.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              sizedBox(),
+              textWidget(
+                "Without huffman :" +
+                    controller
+                        .calculateNormalBitSize(characterAnalyzeList)
+                        .toString() +
+                    " bits",
+                style: bodyStyle,
+              ),
+              textWidget(
+                "With huffman :" +
+                    controller
+                        .calculateHuffmanBitSize(controller.finalCharactersCode)
+                        .toString() +
+                    " bits",
+                style: bodyStyle,
+              ),
+            ],
+          ),
         ),
       );
 
