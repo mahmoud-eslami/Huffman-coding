@@ -11,6 +11,7 @@ class CharacterModel extends Equatable with Comparable {
     return "char : $char | repetition : $frequency";
   }
 
+  //Being able to compare objects in Dart often involves having to override the == operator as well as hashCode.
   @override
   List<Object?> get props => [char, frequency];
 

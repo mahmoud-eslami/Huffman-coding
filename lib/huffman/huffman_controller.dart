@@ -3,6 +3,8 @@ import 'package:collection/collection.dart';
 import 'package:huffman_code/model/node_model.dart';
 
 class HuffmanController {
+  List<String> finalCharactersCode = [];
+
   List<CharacterModel> analyzeInputMessage(String message) {
     List<String> chars = [];
 
@@ -66,36 +68,25 @@ class HuffmanController {
     return nodeList.last;
   }
 
-  getDepth(NodeModel rootNode, List dataList) {
-    var tempList = dataList;
-    print("started");
-    if (rootNode.lNode == null && rootNode.rNode == null) {
-      print("finished");
-      return tempList;
-    } else if (rootNode.lNode == null && rootNode.rNode != null) {
-      var list = [null, rootNode.rNode];
-      print(tempList);
-      tempList.add(list);
-      getDepth(rootNode.rNode!, tempList);
-    } else if (rootNode.lNode != null && rootNode.rNode == null) {
-      print(tempList);
+  parseFinalNode(NodeModel rootNode, String path, List<String> list,
+      List characterList) async {
+    // print("char l :" + characterAnalyzeListG.length.toString());
+    // print("list l :" + list.length.toString());
 
-      var list = [rootNode.lNode, null];
-      tempList.add(list);
-      getDepth(rootNode.lNode!, tempList);
+    if (rootNode.isLeaf()) {
+      list.add(
+          "leaf : ${rootNode.name} , frequency : ${rootNode.frequency} , code : $path *");
+
+      if (list.length == characterList.length - 1) {
+        finalCharactersCode.addAll(list);
+      }
     } else {
-      print(tempList);
-
-      var list = [rootNode.lNode, rootNode.rNode];
-      tempList.add(list);
-      getDepth(rootNode.rNode!, tempList);
-      getDepth(rootNode.lNode!, tempList);
+      if (rootNode.rNode != null) {
+        parseFinalNode(rootNode.rNode!, path + "1", list, characterList);
+      }
+      if (rootNode.lNode != null) {
+        parseFinalNode(rootNode.lNode!, path + "0", list, characterList);
+      }
     }
-  }
-
-  List parseFinalNode(NodeModel rootNode) {
-    List<List<NodeModel>> dataList = [];
-
-    return [];
   }
 }

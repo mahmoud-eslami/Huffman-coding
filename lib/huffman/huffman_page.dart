@@ -35,6 +35,8 @@ class _HuffmanPageState extends State<HuffmanPage> {
   clearFunction() {
     inputController.clear();
     characterAnalyzeList.clear();
+    controller.finalCharactersCode.clear();
+    pq.clear();
     setState(() {});
   }
 
@@ -87,6 +89,7 @@ class _HuffmanPageState extends State<HuffmanPage> {
                               ),
                             );
                           } else {
+                            // get frequency of data
                             List<CharacterModel> analyzedData = controller
                                 .analyzeInputMessage(inputController.text);
                             characterAnalyzeList = analyzedData;
@@ -97,7 +100,16 @@ class _HuffmanPageState extends State<HuffmanPage> {
                             // assign values to pq
                             pq =
                                 await controller.createHuffmanCodingTree(queue);
-                            print(controller.getDepth(pq.first, []));
+
+                            // clear list to fill new data
+                            controller.finalCharactersCode.clear();
+
+                            // parse huffman tree
+                            await controller.parseFinalNode(
+                                pq.first, "", [], characterAnalyzeList);
+
+                            print(controller.finalCharactersCode);
+
                             setState(() {});
                           }
                         },
@@ -176,8 +188,8 @@ class _HuffmanPageState extends State<HuffmanPage> {
                 children: [
                   for (var i = 0; i < characterAnalyzeList.length; i++)
                     Text(
-                      "[${characterAnalyzeList[i].char}:${characterAnalyzeList[i].frequency.toString()}]" +
-                          "   ",
+                      "[${characterAnalyzeList[i].char}:${characterAnalyzeList[i].frequency.toString()}]    ",
+                      style: const TextStyle(fontSize: 20),
                     ),
                 ],
               ),
