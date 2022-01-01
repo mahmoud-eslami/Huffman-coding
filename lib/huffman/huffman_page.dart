@@ -108,8 +108,6 @@ class _HuffmanPageState extends State<HuffmanPage> {
                             await controller.parseFinalNode(
                                 pq.first, "", [], characterAnalyzeList);
 
-                            print(controller.finalCharactersCode);
-
                             setState(() {});
                           }
                         },
@@ -148,7 +146,39 @@ class _HuffmanPageState extends State<HuffmanPage> {
               sizedBox(),
               if (characterAnalyzeList.isNotEmpty) inputAnalyzeWidget(),
               sizedBox(),
+              if (controller.finalCharactersCode.isNotEmpty)
+                binaryCodesWidget(),
+              sizedBox(),
               if (pq.isNotEmpty) huffmanTreeWidget(),
+            ],
+          ),
+        ),
+      );
+
+  binaryCodesWidget() => Container(
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: Colors.cyan,
+            width: 2.2,
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              textWidget(
+                "Output :",
+                style: bodyStyle.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              sizedBox(),
+              for (int i = 0; i < controller.finalCharactersCode.length; i++)
+                Text(
+                  "${controller.finalCharactersCode[i].char} :    ${controller.finalCharactersCode[i].code}",
+                  style: const TextStyle(fontSize: 20),
+                )
             ],
           ),
         ),

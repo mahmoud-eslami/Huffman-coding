@@ -1,9 +1,10 @@
 import 'package:huffman_code/model/character_model.dart';
 import 'package:collection/collection.dart';
+import 'package:huffman_code/model/leaf_model.dart';
 import 'package:huffman_code/model/node_model.dart';
 
 class HuffmanController {
-  List<String> finalCharactersCode = [];
+  List<LeafModel> finalCharactersCode = [];
 
   List<CharacterModel> analyzeInputMessage(String message) {
     List<String> chars = [];
@@ -68,14 +69,14 @@ class HuffmanController {
     return nodeList.last;
   }
 
-  parseFinalNode(NodeModel rootNode, String path, List<String> list,
+  parseFinalNode(NodeModel rootNode, String path, List<LeafModel> list,
       List characterList) async {
     // print("char l :" + characterAnalyzeListG.length.toString());
     // print("list l :" + list.length.toString());
 
     if (rootNode.isLeaf()) {
-      list.add(
-          "leaf : ${rootNode.name} , frequency : ${rootNode.frequency} , code : $path *");
+      list.add(LeafModel(
+          char: rootNode.name, frequency: rootNode.frequency, code: path));
 
       if (list.length == characterList.length - 1) {
         finalCharactersCode.addAll(list);
